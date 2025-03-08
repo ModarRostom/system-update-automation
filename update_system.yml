@@ -1,0 +1,16 @@
+---
+- name: Perform system updates
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install updates on RHEL-based systems
+      yum:
+        name: '*'
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: Install updates on Debian-based systems
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == "Debian"
